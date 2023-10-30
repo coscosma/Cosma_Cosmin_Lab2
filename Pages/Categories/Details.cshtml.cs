@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Cosma_Cosmin_Lab2.Data;
 using Cosma_Cosmin_Lab2.Models;
 
-namespace Cosma_Cosmin_Lab2.Pages.Books
+namespace Cosma_Cosmin_Lab2.Pages.Categories
 {
     public class DetailsModel : PageModel
     {
@@ -19,26 +19,23 @@ namespace Cosma_Cosmin_Lab2.Pages.Books
             _context = context;
         }
 
-      public Book Book { get; set; } = default!; 
+      public Category Category { get; set; } = default!; 
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Book == null)
+            if (id == null || _context.Category == null)
             {
                 return NotFound();
             }
 
-            var book = await _context.Book
-                .Include(b =>b.Author)     
-                .Include(b =>b.Publisher)
-                .FirstOrDefaultAsync(m => m.ID == id);
-            if (book == null)
+            var category = await _context.Category.FirstOrDefaultAsync(m => m.ID == id);
+            if (category == null)
             {
                 return NotFound();
             }
             else 
             {
-                Book = book;
+                Category = category;
             }
             return Page();
         }
